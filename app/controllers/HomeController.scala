@@ -21,6 +21,9 @@ class HomeController @Inject()(val cc: ControllerComponents) extends AbstractCon
    * a path of `/`.
    */
   def index(p:Option[Int]) = Action { request =>
-    Ok(views.html.index("これはコントローラーで用意したメッセージです", p.getOrElse(0)))
+    val arr = List(
+      "Terry", "Mike", "Gen"
+    )
+    Ok(views.html.index("これはコントローラーで用意したメッセージです", arr))
   }
 }
