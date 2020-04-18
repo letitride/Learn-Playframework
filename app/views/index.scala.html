@@ -1,15 +1,5 @@
-@(name: String, value: Int, calendar:java.util.Calendar)
+@()
 
-<!DOCTYPE html>
-<html>
-<head>
-  <title>index view</title>
-  <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
-</head>
-<body>
-  <h1>Index</h1>
-  <p>name: @name</p>
-  <p>value: @value</p>
-  <p>calendar: @calendar.getTime()</p>
-</body>
-</html>
+@main("index view"){
+<h1>Welcome to Play！</h1>
+}

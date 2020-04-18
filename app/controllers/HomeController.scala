@@ -21,6 +21,6 @@ class HomeController @Inject()(val cc: ControllerComponents) extends AbstractCon
    * a path of `/`.
    */
   def index() = Action { request =>
-    Ok(views.html.index("Terry & Mike", 123, Calendar.getInstance()))
+    Ok(views.html.index())
   }
 }
