@@ -1,10 +1,14 @@
 @(message: String, arr: List[String])
 
+@hello(name:String) = {
+<li>Hello "@name"!</li>
+}
+
 @main("index view", "Hello", "Copy Right 2020."){
 <p>@message</p>
 <ol>
     @for(item <- arr){
-    <li>@item</li>
+        @hello(item)
     }
 </ol>
 }
