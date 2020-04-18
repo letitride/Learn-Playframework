@@ -1,24 +1,23 @@
-@(message: String, arr: List[String])
+@(message: String, arr: List[List[String]], header:List[String])
 
-@makeList(arr:List[String], numbering:Boolean) = {
-@if(numbering){
-    <ol>
-} else {
-    <ul>
-}
-        @for(item <- arr){
-        <li>@item</li>
+@makeTable(data:List[List[String]], header:List[String]) = {
+<table>
+    <tr>
+        @for(item <- header){
+        <th>@item</th>
         }
-        @if(numbering){
-        </ol>
-            } else {
-            </ul>
-                }
+    </tr>
+    @for(row <- data){
+    <tr>
+        @for(item <- row){
+        <td>@item</td>
+        }
+    </tr>
+    }
+</table>
 }
 
 @main("index view", "Hello", "Copy Right 2020."){
 <p>@message</p>
-@makeList(arr, true)
-<hr />
-@makeList(arr, false)
+@makeTable(arr, header)
 }

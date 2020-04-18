@@ -22,8 +22,10 @@ class HomeController @Inject()(val cc: ControllerComponents) extends AbstractCon
    */
   def index(p:Option[Int]) = Action { request =>
     val arr = List(
-      "Terry", "Mike", "Gen"
+      List("Terry", "Man", "101-0001"),
+      List("Mike", "Maki", "785-0001"),
+      List("Inami", "San", "001-0001")
     )
-    Ok(views.html.index("これはコントローラーで用意したメッセージです", arr))
+    Ok(views.html.index("これはコントローラーで用意したメッセージです", arr, List("Name", "NickName", "ZipCode") ))
   }
 }
