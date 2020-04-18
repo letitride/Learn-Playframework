@@ -1,6 +1,10 @@
-@(message: String)
+@(message: String, p: Int)
 
-@main("index view", "Hello", message){
-<h1>Welcome to Play！</h1>
+@main("index view", "Hello", "Copy Right 2020."){
 <p>@message</p>
+    @if(p % 2 == 0){
+    <p>@p は、偶数です。</p>
+    }else{
+    <p>@p は、基数です。</p>
+    }
 }

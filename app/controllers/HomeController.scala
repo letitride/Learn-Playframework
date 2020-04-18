@@ -20,7 +20,7 @@ class HomeController @Inject()(val cc: ControllerComponents) extends AbstractCon
    * will be called when the application receives a `GET` request with
    * a path of `/`.
    */
-  def index() = Action { request =>
-    Ok(views.html.index("これはコントローラーで用意したメッセージです"))
+  def index(p:Option[Int]) = Action { request =>
+    Ok(views.html.index("これはコントローラーで用意したメッセージです", p.getOrElse(0)))
   }
 }
