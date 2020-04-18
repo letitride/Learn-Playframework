@@ -18,19 +18,16 @@ class HomeController @Inject()(val cc: ControllerComponents) extends AbstractCon
    * will be called when the application receives a `GET` request with
    * a path of `/`.
    */
-  def index(name:Option[String]) = Action { request =>
+  def index(name:Option[String], value:Option[String]) = Action { request =>
 
-    val param = name.getOrElse("")
-    val message:String = name match {
-      case Some(value) =>  "<p>nameがおくられました。</p>"
-      case None => "<p>nameはありません</p>"
-    }
+    val s_name = name.getOrElse("")
+    val s_value = value.getOrElse("")
+    val sessions = request.session.data
+    val message = s"<pre>${sessions}<pre>"
+    val res = Ok( "<meta charset='utf-8'><title>Hello!</title><h1>Hello</h1>" + message ).as("text/html")
 
-    val cookie = request.cookies.get("name")
-    val resMessage = message + "<p>cookie: " + cookie.getOrElse(Cookie("name", "no-cookie.")).value + "</p>"
-    val res = Ok( "<meta charset='utf-8'><title>Hello!</title><h1>Hello</h1>" + resMessage ).as("text/html")
-    if (param != "") {
-      res.withCookies(Cookie("name", param)).bakeCookies()
+    if (s_name != "") {
+      res.withSession(request.session + (s_name -> s_value))
     }else{
       res
     }
