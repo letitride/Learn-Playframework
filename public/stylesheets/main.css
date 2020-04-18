@@ -1,14 +1,36 @@
 body{
   padding: 0 30px;
-  color: #666;
-  font-size:18pt;
 }
 
-h1{
+header div.header{
   font-size: 72pt;
   font-weight: bold;
   text-align: right;
   letter-spacing: -8px;
-  color: #f0f0f0;
   margin: -30px -25px;
+  color: #eef;
+}
+
+h1{
+  color: #77b;
+  font-size: 30pt;
+  font-weight: bold;
+  text-align: left;
+  margin: -85px 0 0 0;
+}
+
+article{
+  color: #567;
+  font-size: 14pt;
+}
+
+footer{
+  color: #66e;
+  text-align: center;
+  font-size: 12pt;
+}
+
+.row{
+  margin: 15px 0;
+  border-bottom: solid 1px #ddd;
 }

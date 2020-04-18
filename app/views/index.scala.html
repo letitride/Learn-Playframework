@@ -1,5 +1,6 @@
-@()
+@(message: String)
 
-@main("index view"){
+@main("index view", "Hello", message){
 <h1>Welcome to Play！</h1>
+<p>@message</p>
 }
