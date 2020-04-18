@@ -28,7 +28,7 @@ class HomeController @Inject()(val cc: ControllerComponents) extends AbstractCon
 
     val cookie = request.cookies.get("name")
     val resMessage = message + "<p>cookie: " + cookie.getOrElse(Cookie("name", "no-cookie.")).value + "</p>"
-    val res = Ok( "<meta charset='utf-8'><title><Hello!</title><h1>Hello</h1>" + resMessage ).as("text/html")
+    val res = Ok( "<meta charset='utf-8'><title>Hello!</title><h1>Hello</h1>" + resMessage ).as("text/html")
     if (param != "") {
       res.withCookies(Cookie("name", param)).bakeCookies()
     }else{
