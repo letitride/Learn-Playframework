@@ -1,5 +1,12 @@
-@()
+@(name: String, value: Int, calendar:java.util.Calendar)
 
-@main("Welcome to Play") {
-  <h1>Welcome to Play!</h1>
-}
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+  <h1>Index</h1>
+  <p>name: @name</p>
+  <p>value: @value</p>
+  <p>calendar: @calendar.getTime()</p>
+</body>
+</html>
