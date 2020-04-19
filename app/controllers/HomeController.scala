@@ -20,12 +20,15 @@ class HomeController @Inject()(val cc: ControllerComponents) extends AbstractCon
    * will be called when the application receives a `GET` request with
    * a path of `/`.
    */
-  def index(p:Option[Int]) = Action { request =>
-    val arr = List(
-      List("Terry", "Man", "101-0001"),
-      List("Mike", "Maki", "785-0001"),
-      List("Inami", "San", "001-0001")
-    )
-    Ok(views.html.index("これはコントローラーで用意したメッセージです", arr, List("Name", "NickName", "ZipCode") ))
+  def index() = Action { request =>
+    Ok(views.html.index("これはコントローラーで用意したメッセージです" ))
+  }
+
+  def form() = Action{ request =>
+    val form:Option[Map[String, Seq[String]]] = request.body.asFormUrlEncoded
+    val param = form.getOrElse(Map())
+    val name = param.get("name").get(0)
+    val pass = param.get("pass").get(0)
+    Ok(views.html.index( "name:" + name + ", password:" + pass ))
   }
 }
