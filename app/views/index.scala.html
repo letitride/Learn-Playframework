@@ -6,6 +6,9 @@
 @helper.CSRF.formField
 @helper.inputText(myForm("name"))
 @helper.inputPassword(myForm("pass"))
+@helper.inputRadioGroup(myForm("radio"),
+options = Seq("ウィンドウズ" -> "Windows", "マック" -> "macOS", "リナックス" -> "Linux" )
+)
 <button>send form</button>
 }
 }

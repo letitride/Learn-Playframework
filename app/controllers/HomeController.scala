@@ -28,6 +28,6 @@ class HomeController @Inject()(val cc: MessagesControllerComponents) extends Mes
   def form() = Action{ implicit request =>
     val form = myForm.bindFromRequest
     val data = form.get
-    Ok(views.html.index( "name:" + data.name + ", password:" + data.pass, form ))
+    Ok(views.html.index( "name:" + data.name + ", password:" + data.pass + ", radio:" + data.radio, form ))
   }
 }
