@@ -1,14 +1,5 @@
-@(message: String, myForm:Form[MyForm.Data])(implicit request:MessagesRequestHeader)
+@(message: String)
 
 @main("index view", "Hello", "Copy Right 2020."){
-<p>@message</p>
-@helper.form(action=routes.HomeController.form){
-@helper.CSRF.formField
-@helper.inputText(myForm("name"))
-@helper.inputPassword(myForm("pass"))
-@helper.inputRadioGroup(myForm("radio"),
-options = Seq("ウィンドウズ" -> "Windows", "マック" -> "macOS", "リナックス" -> "Linux" )
-)
-<button>send form</button>
-}
+<p>@Html(message)</p>
 }

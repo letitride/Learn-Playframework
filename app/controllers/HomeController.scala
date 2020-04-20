@@ -1,8 +1,9 @@
 package controllers
 
-import java.util.Calendar
+import java.sql.SQLException
 
 import javax.inject._
+import play.api.db.Database
 import play.api.mvc._
 
 
@@ -11,23 +12,25 @@ import play.api.mvc._
  * application's home page.
  */
 @Singleton
-class HomeController @Inject()(val cc: MessagesControllerComponents) extends MessagesAbstractController(cc) {
+class HomeController @Inject()(db: Database, cc: MessagesControllerComponents)
+  extends MessagesAbstractController(cc) {
 
-  import MyForm._
-  /**
-   * Create an Action to render an HTML page.
-   *
-   * The configuration in the `routes` file means that this method
-   * will be called when the application receives a `GET` request with
-   * a path of `/`.
-   */
   def index() = Action { implicit request =>
-    Ok(views.html.index("これはコントローラーで用意したメッセージです", myForm ))
+    var msg = "database record:<br><ul>"
+    try{
+      db.withConnection{ conn =>
+        val stmt = conn.createStatement
+        val rs = stmt.executeQuery("select * from people")
+        while(rs.next){
+          msg += "<li>" + rs.getInt("id") + ":" + rs.getString("name") + "</li>"
+        }
+        msg += "</ul>"
+      }
+    }catch{
+      case e:SQLException => msg = "<li>no record...</li>"
+    }
+
+    Ok(views.html.index( msg ))
   }
 
-  def form() = Action{ implicit request =>
-    val form = myForm.bindFromRequest
-    val data = form.get
-    Ok(views.html.index( "name:" + data.name + ", password:" + data.pass + ", radio:" + data.radio, form ))
-  }
 }
