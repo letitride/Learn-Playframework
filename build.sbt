@@ -13,6 +13,7 @@ libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0
 libraryDependencies += evolutions
 libraryDependencies += jdbc
 libraryDependencies += "org.postgresql" % "postgresql" % "42.2.12"
+libraryDependencies += "com.h2database" % "h2" % "1.4.200"
 
 
 // Adds additional packages into Twirl
