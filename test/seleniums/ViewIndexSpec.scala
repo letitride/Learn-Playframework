@@ -25,6 +25,7 @@ class IndexSpec extends PlaySpec with GuiceOneServerPerTest with OneBrowserPerSu
     }
   }
 /*
+
   "POST /" should {
     "投稿したものが表示される" in {
       val body = "test post"
