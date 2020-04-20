@@ -33,4 +33,28 @@ class HomeController @Inject()(db: Database, cc: MessagesControllerComponents)
     Ok(views.html.index( msg ))
   }
 
+  import PersonForm._
+
+  def add() = Action{ implicit request =>
+    Ok(views.html.add(
+      "フォームを記入して下さい。", form
+    ))
+  }
+
+  def create() = Action{ implicit request =>
+    val formData = form.bindFromRequest()
+    val data = formData.get
+    try {
+      db.withConnection{ conn =>
+        val ps = conn.prepareStatement("insert into people (name, mail, tel)values(?, ?, ?)")
+        ps.setString(1, data.name)
+        ps.setString(2, data.mail)
+        ps.setString(3, data.tel)
+        ps.executeUpdate()
+      }
+    } catch{
+      case e:SQLException => Ok(views.html.add("フォームを記入して下さい。", form))
+    }
+    Redirect(routes.HomeController.index)
+  }
 }
