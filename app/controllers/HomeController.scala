@@ -57,4 +57,41 @@ class HomeController @Inject()(db: Database, cc: MessagesControllerComponents)
     }
     Redirect(routes.HomeController.index)
   }
+
+  def edit(id:Int) = Action{ implicit request =>
+    var formData = form.bindFromRequest
+    try {
+      db.withConnection{ conn =>
+        val stmt = conn.createStatement
+        val rs = stmt.executeQuery("select * from people where id =" + id)
+        rs.next
+        val name = rs.getString("name")
+        val mail = rs.getString("mail")
+        val tel = rs.getString("tel")
+        val data = Data(name, mail, tel)
+        formData = form.fill(data)
+      }
+    } catch {
+      case e:SQLException => Redirect(routes.HomeController.index())
+    }
+    Ok(views.html.edit("フォームを編集して下さい。", formData, id))
+  }
+
+  def update(id:Int) = Action{ implicit request =>
+    var formData = form.bindFromRequest
+    val data = formData.get
+    try
+      db.withConnection{ conn =>
+        val ps = conn.prepareStatement("update people set name=?, mail=?, tel=? where id=?")
+        ps.setString(1, data.name)
+        ps.setString(2, data.mail)
+        ps.setString(3, data.tel)
+        ps.setInt(4, id)
+        ps.executeUpdate()
+      }
+    catch {
+      case e: SQLException => Ok(views.html.add("フォームに入力して下さい。", form))
+    }
+    Redirect(routes.HomeController.index())
+  }
 }
