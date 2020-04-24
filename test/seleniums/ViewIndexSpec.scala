@@ -3,6 +3,8 @@ package seleniums
 import org.openqa.selenium.WebDriver
 import org.scalatestplus.play.guice.GuiceOneServerPerTest
 import org.scalatestplus.play.{HtmlUnitFactory, OneBrowserPerSuite, PlaySpec}
+import play.api.Application
+import play.api.inject.guice.GuiceApplicationBuilder
 
 class IndexSpec extends PlaySpec with GuiceOneServerPerTest with OneBrowserPerSuite with HtmlUnitFactory{
 
@@ -17,10 +19,20 @@ class IndexSpec extends PlaySpec with GuiceOneServerPerTest with OneBrowserPerSu
     driver
   }
 
+  override def fakeApplication(): Application = {
+    new GuiceApplicationBuilder()
+      .configure(
+        "db.default.driver" -> "org.h2.Driver",
+        "db.default.url" -> "jdbc:h2:mem:test;MODE=PostgreSQL"
+      )
+      .build()
+  }
+
   "GET /" should {
     "view表示のテスト" in {
       go to s"http://localhost:$port/"
       assert(pageTitle === "index view")
+      println( findAll(className("list-data") ).toSeq )
       //assert(findAll(className("post-body")).length === 0)
     }
   }

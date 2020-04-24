@@ -22,7 +22,7 @@ class HomeController @Inject()(db: Database, cc: MessagesControllerComponents)
         val stmt = conn.createStatement
         val rs = stmt.executeQuery("select * from people")
         while(rs.next){
-          msg += "<li>" + rs.getInt("id") + ":" + rs.getString("name") + "</li>"
+          msg += "<li  class=\"list-data\">" + rs.getInt("id") + ":" + rs.getString("name") + "</li>"
         }
         msg += "</ul>"
       }
