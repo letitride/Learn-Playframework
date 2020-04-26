@@ -1,9 +1,9 @@
-@(message: String, result:List[PersonForm.PersonData])
+@(message: String, data:Seq[models.Person])
 
 @main("Index Page", "Hello", "Copy Right 2020."){
 <p>@Html(message)</p>
 <ul>
-    @for(item<-result){
+    @for(item<-data){
     <li>@item.name: @item.mail (@item.tel)</li>
     }
 </ul>
