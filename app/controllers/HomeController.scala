@@ -6,6 +6,7 @@ import javax.inject._
 import play.api.db.Database
 import play.api.mvc._
 import anorm._
+import PersonForm._
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -17,18 +18,12 @@ class HomeController @Inject()(db: Database, cc: MessagesControllerComponents)
 
   def index() = Action { implicit request =>
     db.withConnection{ implicit conn =>
-      val result:List[Any] = SQL("select * from people")
-        .as(
-          SqlParser.str("name")
-          .~(SqlParser.str("mail")).*)
-      for(item <- result){
-        println(item)
-      }
+      val result = SQL("select * from people")
+        .as(personparser.*)
       Ok(views.html.index( "People Data", result ))
     }
   }
 
-  import PersonForm._
 
   def add() = Action{ implicit request =>
     Ok(views.html.add(
