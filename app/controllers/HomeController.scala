@@ -7,6 +7,7 @@ import play.api.db.Database
 import play.api.mvc._
 import anorm._
 import PersonForm._
+import org.postgresql.util.PSQLException
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -44,17 +45,22 @@ class HomeController @Inject()(db: Database, cc: MessagesControllerComponents)
     val formData = form.bindFromRequest()
     val data = formData.get
     try {
-      db.withConnection{ conn =>
-        val ps = conn.prepareStatement("insert into people (name, mail, tel)values(?, ?, ?)")
-        ps.setString(1, data.name)
-        ps.setString(2, data.mail)
-        ps.setString(3, data.tel)
-        ps.executeUpdate()
+      db.withConnection { implicit conn =>
+        SQL("insert into people (name, mail, tel) values ({name}, {mail}, {tel})")
+          .on(
+            "name" -> data.name,
+            "mail" -> data.mail,
+            "tel" -> data.tel
+          ).executeInsert()
+        Redirect(routes.HomeController.index())
       }
-    } catch{
-      case e:SQLException => Ok(views.html.add("フォームを記入して下さい。", form))
+    }catch {
+      case e:PSQLException => {
+        println(e.getMessage)
+        Redirect(routes.HomeController.index())
+      }
+
     }
-    Redirect(routes.HomeController.index)
   }
 
   def edit(id:Int) = Action{ implicit request =>
