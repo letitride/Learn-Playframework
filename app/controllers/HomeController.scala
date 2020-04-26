@@ -17,8 +17,13 @@ class HomeController @Inject()(db: Database, cc: MessagesControllerComponents)
 
   def index() = Action { implicit request =>
     db.withConnection{ implicit conn =>
-      val result:List[String] = SQL("select * from people")
-        .as(SqlParser.str("name").*)
+      val result:List[Any] = SQL("select * from people")
+        .as(
+          SqlParser.str("name")
+          .~(SqlParser.str("mail")).*)
+      for(item <- result){
+        println(item)
+      }
       Ok(views.html.index( "People Data", result ))
     }
   }
