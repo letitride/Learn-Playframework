@@ -14,7 +14,8 @@ libraryDependencies += evolutions
 libraryDependencies += jdbc
 libraryDependencies += "org.postgresql" % "postgresql" % "42.2.12"
 libraryDependencies += "com.h2database" % "h2" % "1.4.200"
-
+// https://github.com/playframework/anorm/releases
+libraryDependencies += "org.playframework.anorm" %% "anorm" % "2.6.5"
 
 // Adds additional packages into Twirl
 //TwirlKeys.templateImports += "com.example.controllers._"

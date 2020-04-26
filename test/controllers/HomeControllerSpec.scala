@@ -34,7 +34,6 @@ class HomeControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting
   Evolutions.applyEvolutions(database)
 
   "HomeController GET" should {
-
     "render the index page from a new instance of controller" in {
       val controller = new HomeController( database, stubMessagesControllerComponents())
       val home = controller.index().apply(FakeRequest(GET, "/").withCSRFToken)
@@ -43,7 +42,6 @@ class HomeControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting
       contentType(home) mustBe Some("text/html")
       println(contentAsString(home))
       //contentAsString(home) must include ("Terry")
-
     }
 /*
     "データ送信のテスト" in {

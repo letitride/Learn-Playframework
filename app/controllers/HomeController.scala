@@ -5,7 +5,7 @@ import java.sql.SQLException
 import javax.inject._
 import play.api.db.Database
 import play.api.mvc._
-
+import anorm._
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -16,21 +16,11 @@ class HomeController @Inject()(db: Database, cc: MessagesControllerComponents)
   extends MessagesAbstractController(cc) {
 
   def index() = Action { implicit request =>
-    var msg = "database record:<br><ul>"
-    try{
-      db.withConnection{ conn =>
-        val stmt = conn.createStatement
-        val rs = stmt.executeQuery("select * from people")
-        while(rs.next){
-          msg += "<li  class=\"list-data\">" + rs.getInt("id") + ":" + rs.getString("name") + "</li>"
-        }
-        msg += "</ul>"
-      }
-    }catch{
-      case e:SQLException => msg = "<li>no record...</li>"
+    db.withConnection{ implicit conn =>
+      val result:List[String] = SQL("select * from people")
+        .as(SqlParser.str("name").*)
+      Ok(views.html.index( "People Data", result ))
     }
-
-    Ok(views.html.index( msg ))
   }
 
   import PersonForm._
