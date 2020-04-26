@@ -24,6 +24,15 @@ class HomeController @Inject()(db: Database, cc: MessagesControllerComponents)
     }
   }
 
+  def show(id:Int) = Action{ implicit request =>
+    db.withConnection{ implicit conn =>
+      val result = SQL("select * from people where id = {id}")
+        .on("id" -> id)
+        .as(personparser.single)
+      Ok(views.html.show("People Data", result))
+    }
+  }
+
 
   def add() = Action{ implicit request =>
     Ok(views.html.add(
