@@ -43,4 +43,10 @@ class HomeController @Inject()
       }
     )
   }
+
+  def show(id:Int) = Action.async{ implicit request =>
+    repository.get(id).map{ person =>
+      Ok(views.html.show("People Data.", person))
+    }
+  }
 }
