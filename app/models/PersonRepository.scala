@@ -37,4 +37,9 @@ class PersonRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(impli
     people.filter(_.id === id).result.head
   }
 
+  def update(id:Int, name:String, mail:String, tel:String) = {
+    db.run{
+      people.insertOrUpdate(Person(id, name, mail, tel))
+    }
+  }
 }
