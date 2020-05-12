@@ -42,4 +42,10 @@ class PersonRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(impli
       people.insertOrUpdate(Person(id, name, mail, tel))
     }
   }
+
+  def delete(id:Int):Future[Int] = {
+    db.run(
+      people.filter(_.id === id ).delete
+    )
+  }
 }
