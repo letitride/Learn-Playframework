@@ -15,5 +15,11 @@ object Person {
       "tel" -> text
     )(PersonForm.apply)(PersonForm.unapply)
   }
+  val personFind:Form[PersonFind] = Form {
+    mapping(
+      "find" -> text
+    )(PersonFind.apply)(PersonFind.unapply)
+  }
 }
+case class PersonFind(find:String)
 

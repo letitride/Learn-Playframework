@@ -48,4 +48,8 @@ class PersonRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(impli
       people.filter(_.id === id ).delete
     )
   }
+
+  def find(s:String):Future[Seq[Person]] = db.run{
+    people.filter(_.name === s).result
+  }
 }

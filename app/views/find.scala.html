@@ -1,0 +1,18 @@
+@(message: String, form:Form[PersonFind], data:Seq[models.Person])(implicit request: MessagesRequestHeader)
+
+@main("Find People", "Find", "Copy Right 2020."){
+<p>@Html(message)</p>
+@helper.form(action=routes.HomeController.search()){
+    @helper.CSRF.formField
+    <input type="text" name="find2" value="@form.get.find">
+    @helper.inputText(form("find"))
+    <button>Find</button>
+}
+<hr>
+<p>Result:</p>
+<ul>
+    @for(item<-data){
+        <li>@item.id: @item.name: [@item.mail]</li>
+    }
+</ul>
+}

@@ -84,4 +84,24 @@ class HomeController @Inject()
     }
   }
 
+  def find() = Action{implicit request =>
+    Ok(views.html.find("Find Data.", Person.personFind, Seq[Person]()))
+  }
+
+  def search() = Action.async{ implicit request =>
+    Person.personFind.bindFromRequest().fold(
+      hasErrors => {
+        Future.successful(Ok(views.html.find("error.", hasErrors, Seq[Person]())))
+      },
+      find => {
+        repository.find(find.find).map(result => {
+          println(find)
+          val form = Person.personFind.fill(find)
+          println(form)
+          Ok(views.html.find("find: "+find.find, form, result ))
+        })
+      }
+    )
+  }
+
 }
