@@ -6,6 +6,16 @@
     @helper.CSRF.formField
     @helper.inputText(form("name"))
     @helper.inputText(form("mail"))
+
+    @for(item<-form.errors("tel")){
+        @if( item.message == "error.maxLength"){
+            @item.args(0)文字以下で入力
+        }else if( item.message == "error.minLength"){
+            @item.args(0)文字以上で入力
+        }else{
+            @item.message
+        }
+    }
     @helper.inputText(form("tel"))
     <input type="submit" value="Add Person">
 }

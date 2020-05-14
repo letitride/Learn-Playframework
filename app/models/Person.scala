@@ -10,9 +10,9 @@ case class PersonForm(name: String, mail: String, tel: String)
 object Person {
   val personForm:Form[PersonForm] = Form {
     mapping(
-      "name" -> text,
-      "mail" -> text,
-      "tel" -> text
+      "name" -> nonEmptyText(maxLength = 3),
+      "mail" -> email,
+      "tel" -> nonEmptyText(maxLength = 3, minLength = 2).verifying(error="不正な番号", constraint = _.matches("""[1-9-]+"""))
     )(PersonForm.apply)(PersonForm.unapply)
   }
   val personFind:Form[PersonFind] = Form {

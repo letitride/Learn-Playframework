@@ -8,7 +8,7 @@ import play.api.mvc._
 import anorm._
 import models.{Person, PersonForm, PersonRepository}
 import org.postgresql.util.PSQLException
-import play.api.data.Form
+import play.api.data.{Form, FormError}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -35,11 +35,15 @@ class HomeController @Inject()
   def create() = Action.async{ implicit request =>
     Person.personForm.bindFromRequest.fold(
       errorForm => {
+        println(errorForm.hasErrors )
+        println(errorForm.errors )
+        println(errorForm.errors("tel") )
+        errorForm.errors("tel").foreach( (f:FormError) => println(f.messages))
         Future.successful(Ok(views.html.add("error.", errorForm)))
       },
       person => {
         repository.create(person.name, person.mail, person.tel).map{ _ =>
-          Redirect(routes.HomeController.index())
+          Redirect(routes.HomeController.index()).flashing("success"->"エンティティを作成")
         }
       }
     )
