@@ -38,10 +38,11 @@ class HomeControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting
   "HomeController GET" should {
     "render the index page from a new instance of controller" in {
 
-      val p1 = PersonForm("", "", "00-0000-0000")
-      Person.personForm.fill(p1).fold(
+      val p1 = Map("name"->Seq("ic"), "mail"->Seq("ichikawa@gmail.com"), "tel"->Seq("1"))
+      Person.personForm.bindFromRequest(p1).fold(
         hasErrors => {
-          println("error")
+          println(hasErrors)
+          assert( hasErrors.errors("tel").head.message === "error.minLength" )
         },
         success => {
           println("success")
