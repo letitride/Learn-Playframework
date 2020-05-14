@@ -2,6 +2,7 @@ package controllers
 
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
+import models.{Person, PersonForm}
 import org.scalatestplus.play._
 import org.scalatestplus.play.guice._
 import play.api.Application
@@ -16,7 +17,7 @@ import play.api.test.CSRFTokenHelper._
  * For more information, see https://www.playframework.com/documentation/latest/ScalaTestingWithScalaTest
  */
 class HomeControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting {
-
+/*
   import play.api.db.Databases
   import play.api.db.evolutions._
 
@@ -32,9 +33,20 @@ class HomeControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting
   //Evolutionsは /conf/evolutions/"dbname" を実行する
   Evolutions.cleanupEvolutions(database)
   Evolutions.applyEvolutions(database)
+*/
 
   "HomeController GET" should {
     "render the index page from a new instance of controller" in {
+
+      val p1 = PersonForm("test", "a@a.com", "00-0000-0000")
+      Person.personForm.fill(p1).fold(
+        hasErrors => {},
+        success => {
+          println("success")
+        }
+      )
+
+      /*
       val controller = new HomeController( database, stubMessagesControllerComponents())
       val home = controller.index().apply(FakeRequest(GET, "/").withCSRFToken)
 
@@ -42,6 +54,7 @@ class HomeControllerSpec extends PlaySpec with GuiceOneAppPerTest with Injecting
       contentType(home) mustBe Some("text/html")
       println(contentAsString(home))
       //contentAsString(home) must include ("Terry")
+      */
     }
 /*
     "データ送信のテスト" in {

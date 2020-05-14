@@ -26,7 +26,7 @@ class PersonRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(impli
   private val people = TableQuery[PeopleTable]
 
   def list():Future[Seq[Person]] = db.run{
-    people.result
+    people.sortBy(_.name.asc).result
   }
 
   def create(name:String, mail:String, tel:String):Future[Int] = db.run{
@@ -50,6 +50,6 @@ class PersonRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(impli
   }
 
   def find(s:String):Future[Seq[Person]] = db.run{
-    people.filter(_.name === s).result
+    people.filter(_.name like "%" + s + "%").result
   }
 }

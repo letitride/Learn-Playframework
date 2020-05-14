@@ -7,7 +7,7 @@ import play.api.Application
 import play.api.inject.guice.GuiceApplicationBuilder
 
 class IndexSpec extends PlaySpec with GuiceOneServerPerTest with OneBrowserPerSuite with HtmlUnitFactory{
-
+/*
   import org.openqa.selenium.htmlunit.HtmlUnitDriver
 
   override def createWebDriver(): WebDriver = {
@@ -36,6 +36,7 @@ class IndexSpec extends PlaySpec with GuiceOneServerPerTest with OneBrowserPerSu
       //assert(findAll(className("post-body")).length === 0)
     }
   }
+  */
 /*
 
   "POST /" should {
