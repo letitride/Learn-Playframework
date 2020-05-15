@@ -37,7 +37,7 @@ class HomeController @Inject()
       errorForm => {
         println(errorForm.hasErrors )
         println(errorForm.errors )
-        println(errorForm.errors("tel") )
+        println(errorForm.errors("tel").nonEmpty )
         errorForm.errors("tel").foreach( (f:FormError) => println(f.messages))
 
         Future.successful(Ok(views.html.add("error.", errorForm)))

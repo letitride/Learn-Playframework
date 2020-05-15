@@ -3,5 +3,5 @@ error.required=必須
 error.min=最小値: {0}
 error.max=最大値: {0}
 error.minLength=最小の長さ: {0}
-error.maxLength=最大の長さ: {0}
+error.maxLength={0}文字まで入力可能です
 error.email=Eメール

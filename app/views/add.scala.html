@@ -8,8 +8,13 @@
     @helper.inputText(form("mail"))
 
     @for(item<-form.errors("tel")){
-        @item.format
+        @if(item.messages.head == "error.required"){
+          電話番号は必ず入力してください
+        }else{
+          電話番号は@item.format
+        }
     }
+    @if(form.errors("tel").nonEmpty){ 空 }
     @helper.inputText(form("tel"))
     <input type="submit" value="Add Person">
 }
